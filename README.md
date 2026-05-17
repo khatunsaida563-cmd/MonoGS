@@ -1,10 +1,10 @@
-[comment]: <> (# Gaussian Splatting SLAM)
+[comment]: <> (# Gaussian Splatting SLAM in yxf's repo)
 
 <!-- PROJECT LOGO -->
 
 <p align="center">
 
-  <h1 align="center"> Gaussian Splatting SLAM
+  <h1 align="center"> Gaussian Splatting SLAM in yxf's repo
   </h1>
   <p align="center">
     <a href="https://muskie82.github.io/"><strong>*Hidenobu Matsuki</strong></a>
@@ -47,14 +47,28 @@ The method demonstrates the first monocular SLAM solely based on 3D Gaussian Spl
 # Getting Started
 ## Installation
 ```
-git clone https://github.com/muskie82/MonoGS.git --recursive
+git clone https://github.com/khatunsaida563-cmd/MonoGS.git --recursive
 cd MonoGS
 ```
 Setup the environment.
 
 ```
+conda create -n MonoGS-git python=3.7.13
+conda activate MonoGS-git
+
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+vim $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+export PATH=/usr/local/cuda-11.6/bin:$PATH
+export CUDA_HOME=/usr/local/cuda-11.6/
+export LD_LIBRARY_PATH=/usr/local/cuda-11.6/lib64:$LD_LIBRARY_PATH
+
+conda deactivate
+conda activate MonoGS-git
+nvcc -V
+
+pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu116
 conda env create -f environment.yml
-conda activate MonoGS
+conda activate MonoGS-git
 ```
 Depending on your setup, please change the dependency version of pytorch/cudatoolkit in `environment.yml` by following [this document](https://pytorch.org/get-started/previous-versions/).
 
@@ -92,6 +106,7 @@ bash scripts/download_euroc.sh
 ### Monocular
 ```bash
 python slam.py --config configs/mono/tum/fr3_office.yaml
+python slam.py --config configs/mono/tum/fr1_desk.yaml
 ```
 
 ### RGB-D
